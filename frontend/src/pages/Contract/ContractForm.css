@@ -1,0 +1,178 @@
+.contract-form-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.step-indicator {
+  color: #666;
+  font-size: 14px;
+}
+
+.form-section {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.form-section h3 {
+  font-size: 16px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+.form-section h3:not(:first-child) {
+  margin-top: 24px;
+}
+
+.form-field {
+  margin-bottom: 16px;
+}
+
+.form-field label {
+  display: block;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: #4f46e5;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+}
+
+.btn-primary,
+.btn-secondary {
+  flex: 1;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: #4f46e5;
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #4338ca;
+}
+
+.btn-primary:disabled {
+  background: #a5a5a5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: white;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.btn-secondary:hover {
+  background: #f5f5f5;
+}
+
+.signer-card,
+.sign-url-card {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.signer-card h4,
+.sign-url-card h4 {
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.info-row {
+  display: flex;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row .label {
+  width: 100px;
+  color: #666;
+}
+
+.info-row .value {
+  flex: 1;
+  color: #333;
+}
+
+.info-row .value.status-pending {
+  color: #f59e0b;
+  font-weight: 500;
+}
+
+.sign-url-card {
+  background: #e0e7ff;
+  margin-top: 16px;
+}
+
+.sign-url {
+  word-break: break-all;
+  font-size: 13px;
+  color: #4f46e5;
+  background: white;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.sign-url-tip {
+  font-size: 13px;
+  color: #666;
+}
