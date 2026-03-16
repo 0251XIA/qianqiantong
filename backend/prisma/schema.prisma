@@ -1,0 +1,300 @@
+// Prisma Schema for 电子签聚合平台 MVP
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// ============ 用户模块 ============
+
+model User {
+  id              String    @id @default(uuid())
+  phone           String    @unique
+  password        String?
+  name            String?
+  email           String?
+  avatar          String?
+  accountType     String    @default("PERSONAL") // PERSONAL | ENTERPRISE
+  status          String    @default("ACTIVE") // ACTIVE | INACTIVE | BANNED
+  realNameVerified Boolean  @default(false)
+  idCard          String?   // 身份证号（加密存储）
+  enterpriseName  String?   // 企业名称
+  enterpriseCode  String?   // 企业统一社会信用代码
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // 关联
+  contracts       Contract[]
+  templates       Template[]
+  platformConfigs PlatformConfig[]
+  signatures      Signature[]
+  enterpriseUsers EnterpriseUser[]
+
+  @@map("users")
+}
+
+// 企业信息表
+model Enterprise {
+  id              String    @id @default(uuid())
+  name            String
+  licenseCode     String?   // 营业执照号
+  legalPerson     String?   // 法人代表
+  licenseImage    String?   // 营业执照图片
+  status          String    @default("PENDING") // PENDING | VERIFIED | REJECTED
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  users           EnterpriseUser[]
+
+  @@map("enterprises")
+}
+
+// 企业成员关联表
+model EnterpriseUser {
+  id              String    @id @default(uuid())
+  userId          String
+  enterpriseId    String
+  role            String    @default("MEMBER") // OWNER | ADMIN | MEMBER
+  createdAt       DateTime  @default(now())
+
+  user            User      @relation(fields: [userId], references: [id])
+  enterprise      Enterprise @relation(fields: [enterpriseId], references: [id])
+
+  @@unique([userId, enterpriseId])
+  @@map("enterprise_users")
+}
+
+// ============ 合同模块 ============
+
+// 合同模板表
+model Template {
+  id              String    @id @default(uuid())
+  name            String
+  description     String?
+  content         String?   // 模板正文内容（支持变量占位符）
+  fileUrl         String?   // PDF文件URL
+  fileKey         String?   // 第三方平台文件Key
+  category        String?   // 模板分类
+  fields          String    @default("[]") // JSON字段配置：[{key, label, type, required, placeholder}]
+  isSystem        Boolean   @default(false) // 是否系统预设
+  isActive        Boolean   @default(true)  // 是否启用
+  sort            Int       @default(0)     // 排序
+  tags            String    @default("[]") // JSON string
+  isPublic        Boolean   @default(false)
+  userId          String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  user            User      @relation(fields: [userId], references: [id])
+  contracts       Contract[]
+
+  @@map("templates")
+}
+
+// 合同表
+model Contract {
+  id              String    @id @default(uuid())
+  title           String    // 合同标题
+  fileUrl         String?   // PDF文件URL
+  fileKey         String?   // 第三方平台文件Key
+  templateId      String?   // 来源模板ID
+  status          String    @default("DRAFT") 
+  // DRAFT | PENDING | PARTIAL_SIGNED | COMPLETED | REJECTED | EXPIRED | CANCELLED
+  signDeadline    DateTime? // 签署截止时间
+  completedAt     DateTime? // 完成时间
+  userId          String    // 创建者
+  platformId      String?   // 签署平台ID
+  platformFlowId  String?   // 第三方平台流程ID
+  description     String?   // 合同详细内容（JSON或文本）
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // 关联
+  user            User      @relation(fields: [userId], references: [id])
+  template        Template? @relation(fields: [templateId], references: [id])
+  platform        PlatformConfig? @relation(fields: [platformId], references: [id])
+  signers         ContractSigner[]
+  signatures      Signature[]
+  logs            ContractLog[]
+
+  @@map("contracts")
+}
+
+// 合同签署方表
+model ContractSigner {
+  id              String    @id @default(uuid())
+  contractId      String
+  userId          String?   // 系统用户ID（如果有）
+  signerType      String    @default("person") // person | company
+  name            String    // 签署方名称/个人姓名
+  companyName     String?   // 企业名称（企业签署方）
+  handlerName     String?   // 经办人姓名（企业签署方）
+  phone           String?   // 签署方手机
+  email           String?   // 签署方邮箱
+  identityType    String    @default("PHONE") 
+  // PHONE | NAME_IDCARD | REAL_NAME | ENTERPRISE
+  signOrder       Int       @default(1) // 签署顺序
+  status          String    @default("PENDING") 
+  // PENDING | SIGNED | REJECTED | EXPIRED
+  signedAt        DateTime? // 签署时间
+  platformSignerId String?  // 第三方平台签署方ID
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  contract        Contract  @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  @@map("contract_signers")
+}
+
+// 签署记录表
+model Signature {
+  id              String    @id @default(uuid())
+  contractId      String
+  signerId        String?   // 签署方ID
+  userId          String?   // 签署用户ID
+  signType        String   // HANDWRITTEN | UPLOAD | AUTO_SIGN | FACE_SIGN
+  signImageUrl    String?   // 签署图片URL
+  signPosition    String?   // JSON: {page, x, y}
+  ipAddress       String?   // IP地址
+  deviceInfo      String?   // 设备信息
+  platformSignId  String?   // 第三方平台签署记录ID
+  createdAt       DateTime  @default(now())
+
+  contract        Contract  @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  user            User?      @relation(fields: [userId], references: [id])
+
+  @@map("signatures")
+}
+
+// 合同操作日志
+model ContractLog {
+  id              String    @id @default(uuid())
+  contractId      String
+  action          String    // 操作类型
+  operator        String?   // 操作人
+  content         String?   // 操作内容
+  createdAt       DateTime  @default(now())
+
+  contract        Contract  @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  @@map("contract_logs")
+}
+
+// ============ 签署平台配置模块 ============
+
+// 平台配置表
+model PlatformConfig {
+  id              String    @id @default(uuid())
+  name            String    // 平台名称
+  platform        String    // 平台标识: qiyuesuo | esignbao | fadada | custom
+  apiUrl          String    // API地址
+  appId           String    // AppId
+  appSecret       String    // AppSecret（加密存储）
+  enabled         Boolean   @default(true)
+  isDefault       Boolean   @default(false)
+  userId          String    // 所属用户
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  user            User      @relation(fields: [userId], references: [id])
+  contracts       Contract[]
+
+  @@map("platform_configs")
+}
+
+// ============ 支付模块（MVP简化版）==========
+
+// 套餐表
+model Package {
+  id              String    @id @default(uuid())
+  name            String    // 套餐名称
+  type            String    // MONTHLY | YEARLY | COUNT
+  price           Float
+  originalPrice   Float?
+  duration        Int       // 有效期（天）
+  contractCount   Int       // 合同份数
+  features        String    @default("[]") // JSON features
+  isPopular       Boolean   @default(false)
+  status          String    @default("ACTIVE") // ACTIVE | INACTIVE
+  sort            Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  orders           Order[]
+  userPackages   UserPackage[]
+
+  @@map("packages")
+}
+
+// 订单表
+model Order {
+  id              String    @id @default(uuid())
+  orderNo         String    @unique // 订单号
+  userId          String
+  packageId        String?
+  type            String    // PACKAGE | RECHARGE
+  amount          Float
+  status          String    @default("PENDING") 
+  // PENDING | PAID | CANCELLED | REFUNDED
+  paymentMethod   String?   // WECHAT | ALIPAY
+  paymentTime     DateTime? // 支付时间
+  expireTime      DateTime? // 套餐过期时间
+  contractUsed    Int       @default(0) // 已使用份数
+  totalContracts  Int       @default(0) // 总合同份数
+  remark          String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  package         Package?  @relation(fields: [packageId], references: [id])
+
+  @@map("orders")
+}
+
+// 用户套餐关联
+model UserPackage {
+  id              String    @id @default(uuid())
+  userId          String
+  packageId       String
+  expireTime      DateTime  // 过期时间
+  contractUsed    Int       @default(0)
+  totalContracts  Int       @default(0)
+  status          String    @default("ACTIVE") // ACTIVE | EXPIRED | USED_UP
+
+  package         Package   @relation(fields: [packageId], references: [id])
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@unique([userId, status])
+  @@map("user_packages")
+}
+
+// ============ 管理后台 ============
+
+// 管理员表
+model Admin {
+  id              String    @id @default(uuid())
+  username        String    @unique
+  password        String
+  name            String?
+  role            String    @default("ADMIN") // SUPER_ADMIN | ADMIN | OPERATOR
+  lastLoginAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@map("admins")
+}
+
+// 系统配置表
+model SystemConfig {
+  id              String    @id @default(uuid())
+  key             String    @unique
+  value           String    // JSON string
+  description     String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@map("system_configs")
+}
