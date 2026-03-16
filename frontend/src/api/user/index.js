@@ -1,4 +1,4 @@
-import api from './index.js';
+import api from '../index.js';
 
 /**
  * User API - 用户模块
