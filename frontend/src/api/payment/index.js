@@ -1,4 +1,4 @@
-import api from './index.js';
+import api from '../index.js';
 
 /**
  * Payment API - 支付模块
