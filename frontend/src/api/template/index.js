@@ -1,4 +1,4 @@
-import api from './index.js';
+import api from '../index.js';
 
 /**
  * Template API - 模板模块
