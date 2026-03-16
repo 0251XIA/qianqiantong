@@ -1,0 +1,253 @@
+.contract-detail-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  color: #007AFF;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+/* 详情区块 */
+.detail-section {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.detail-section h2 {
+  margin: 0 0 16px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* 信息网格 */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-item label {
+  font-size: 13px;
+  color: #999;
+}
+
+.info-item span {
+  font-size: 14px;
+  color: #333;
+}
+
+/* 签署方卡片 */
+.signers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.signer-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.signer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.signer-order {
+  font-weight: 500;
+  color: #333;
+}
+
+.signer-status {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.signer-pending {
+  background: #fff7e6;
+  color: #fa8c16;
+}
+
+.signer-signed {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.signer-rejected {
+  background: #fff1f0;
+  color: #ff4d4f;
+}
+
+.signer-expired {
+  background: #fff2e8;
+  color: #d46b08;
+}
+
+.signer-info {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+/* 操作记录 */
+.logs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.log-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 13px;
+}
+
+.log-item:last-child {
+  border-bottom: none;
+}
+
+.log-action {
+  font-weight: 500;
+  color: #333;
+  min-width: 80px;
+}
+
+.log-content {
+  flex: 1;
+  color: #666;
+}
+
+.log-time {
+  color: #999;
+}
+
+/* 操作按钮 */
+.action-bar {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+  background: #007AFF;
+  color: white;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #0066DD;
+}
+
+.btn-primary:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: white;
+  color: #666;
+  padding: 10px 24px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: #f5f5f5;
+}
+
+.btn-danger {
+  background: white;
+  color: #ff4d4f;
+  padding: 10px 24px;
+  border: 1px solid #ff4d4f;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background: #fff1f0;
+}
+
+/* 状态标签 */
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-draft { background: #f0f0f0; color: #666; }
+.status-pending { background: #fff7e6; color: #fa8c16; }
+.status-partial { background: #e6f7ff; color: #1890ff; }
+.status-completed { background: #f6ffed; color: #52c41a; }
+.status-rejected { background: #fff1f0; color: #ff4d4f; }
+.status-expired { background: #fff2e8; color: #d46b08; }
+.status-cancelled { background: #f5f5f5; color: #999; }
+
+/* 空状态 */
+.empty-signers {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+}
+
+/* 加载和错误 */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+}
+
+.error-message {
+  background: #fff2f0;
+  border: 1px solid #ffccc7;
+  color: #ff4d4f;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
