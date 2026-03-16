@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { login, register, saveAuthData, isLoggedIn } from './api/modules.js'
+import { login, register, saveAuthData, isLoggedIn } from '../api/modules.js'
 
 export default function Login({ onLogin }) {
   const [phone, setPhone] = useState('13900000000')
