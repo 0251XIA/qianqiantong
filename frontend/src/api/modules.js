@@ -43,6 +43,7 @@ export {
 // Template 模块
 export {
   getTemplates,
+  listTemplates,
   getTemplate,
   createTemplate,
   updateTemplate,
