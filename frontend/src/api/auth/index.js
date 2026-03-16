@@ -1,4 +1,4 @@
-import api from './index.js';
+import api from '../index.js';
 
 /**
  * Auth API - 认证模块
