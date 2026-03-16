@@ -1,0 +1,312 @@
+.enterprise-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+/* 无企业账户 */
+.no-enterprise {
+  text-align: center;
+  padding: 80px 20px;
+  background: white;
+  border-radius: 12px;
+}
+
+.no-enterprise-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.no-enterprise h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.no-enterprise p {
+  color: #666;
+  margin-bottom: 24px;
+}
+
+/* 区块 */
+.section {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* 信息卡片 */
+.info-card {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-row label {
+  font-size: 13px;
+  color: #999;
+}
+
+.info-row span {
+  font-size: 14px;
+  color: #333;
+}
+
+/* 状态标签 */
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-verified {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.status-pending {
+  background: #fff7e6;
+  color: #fa8c16;
+}
+
+.status-rejected {
+  background: #fff1f0;
+  color: #ff4d4f;
+}
+
+/* 成员表格 */
+.members-table {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table-header {
+  display: flex;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  font-weight: 500;
+  font-size: 13px;
+  color: #666;
+}
+
+.table-row {
+  display: flex;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  align-items: center;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.col-name {
+  flex: 1;
+}
+
+.col-phone {
+  flex: 1;
+  color: #666;
+}
+
+.col-role {
+  flex: 1;
+}
+
+.col-actions {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* 角色标签 */
+.role-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.role-owner {
+  background: #fff7e6;
+  color: #fa8c16;
+}
+
+.role-admin {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.role-member {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.role-select {
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.btn-danger-text {
+  background: none;
+  border: none;
+  color: #ff4d4f;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.btn-danger-text:hover {
+  text-decoration: underline;
+}
+
+.empty-members {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+}
+
+/* 按钮 */
+.btn-primary {
+  background: #007AFF;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #0066DD;
+}
+
+.btn-primary:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: white;
+  color: #666;
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: #f5f5f5;
+}
+
+/* 弹窗 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+  max-width: 400px;
+  margin: 20px;
+}
+
+.modal h3 {
+  margin: 0 0 20px;
+  font-size: 18px;
+}
+
+.form-field {
+  margin-bottom: 16px;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #333;
+}
+
+.form-field input,
+.form-field select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+  outline: none;
+  border-color: #007AFF;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.error-message {
+  background: #fff2f0;
+  border: 1px solid #ffccc7;
+  color: #ff4d4f;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-top: 12px;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+}
