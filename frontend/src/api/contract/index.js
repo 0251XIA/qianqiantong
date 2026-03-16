@@ -1,4 +1,4 @@
-import api from './index.js';
+import api from '../index.js';
 
 /**
  * Contract API - 合同模块
