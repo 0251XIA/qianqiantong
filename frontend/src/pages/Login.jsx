@@ -29,10 +29,14 @@ export default function Login({ onLogin }) {
       }
       
       // 保存登录信息
-      saveAuthData(result.data)
-      
-      // 回调通知父组件
-      onLogin(result.data.accessToken)
+      if (result.data) {
+        saveAuthData(result.data)
+        // 回调通知父组件
+        onLogin(result.data.accessToken)
+      } else {
+        saveAuthData(result)
+        onLogin(result.accessToken)
+      }
       
     } catch (err) {
       setError(err.message || '请求失败')
